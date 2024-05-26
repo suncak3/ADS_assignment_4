@@ -1,32 +1,32 @@
 package SearchAlgorithms;
 
+import ElementsOfGraph.Vertex;
 import java.util.*;
 
-public class Search<Vertex> {
-    protected final Vertex source;
-    protected final Set<Vertex> marked;
-    protected final Map<Vertex, Vertex> edgeTo;
+public abstract class Search<V> {
+    protected Vertex<V> source;
+    protected Set<Vertex<V>> marked = new HashSet<>();
+    protected Map<Vertex<V>, Vertex<V>> edgeTo = new HashMap<>();
 
-    public Search(Vertex source) {
-        this.source = source;
-        this.marked = new HashSet<>();
-        this.edgeTo = new HashMap<>();
+    public Search(V source) {
+        this.source = new Vertex<>(source);
     }
 
-    public boolean hasPathTo(Vertex v){
-        return marked.contains(v);
+    public boolean hasPathTo(V destination) {
+        Vertex<V> destVertex = new Vertex<>(destination);
+        return marked.contains(destVertex);
     }
 
-    public Iterable<Vertex> pathTo(Vertex v){
-        if(!hasPathTo(v))
-            return null;
-
-        ArrayList<Vertex> path = new ArrayList<>();
-        for(Vertex vertex = v; vertex != source; vertex = edgeTo.get(vertex)){
-            path.add(vertex);
+    public Iterable<V> pathTo(V destination) {
+        LinkedList<V> path = new LinkedList<>();
+        Vertex<V> current = new Vertex<>(destination);
+        while (current != null && !current.equals(source)) {
+            path.addFirst(current.getData());
+            current = edgeTo.get(current);
         }
-        path.add(source);
-        Collections.reverse(path);
+        if (current.equals(source)) {
+            path.addFirst(source.getData());
+        }
         return path;
     }
 }

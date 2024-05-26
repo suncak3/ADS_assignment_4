@@ -1,21 +1,25 @@
 package SearchAlgorithms;
 
 import Graphs.MyGraph;
+import ElementsOfGraph.Vertex;
 
-public class DFS<Vertex> extends Search<Vertex>{
-    public DFS(MyGraph<Vertex> graph, Vertex source) {
+public class DFS<V> extends Search<V> {
+    private MyGraph<V> graph;
+
+    public DFS(MyGraph<V> graph, V source) {
         super(source);
-
-        dfs(graph, source);
+        this.graph = graph;
+        Vertex<V> sourceVertex = new Vertex<>(source);
+        dfs(sourceVertex);
     }
 
-    private void dfs(MyGraph<Vertex> graph, Vertex current) {
-        marked.add(current);
-
-        for (Vertex v : graph.adj(current)) {
-            if (!marked.contains(v)) {
-                edgeTo.put(v, current);
-                dfs(graph, v);
+    private void dfs(Vertex<V> vertex) {
+        Vertex<V> markedVertex = vertex;
+        marked.add(markedVertex);
+        for (Vertex<V> adjVertex : graph.adj(vertex)) {
+            if (!marked.contains(adjVertex)) {
+                edgeTo.put(adjVertex, markedVertex);
+                dfs(adjVertex);
             }
         }
     }

@@ -5,7 +5,18 @@ import SearchAlgorithms.DFS;
 import SearchAlgorithms.DijkstraSearch;
 import SearchAlgorithms.Search;
 
+
+/*
+    Dear teacher, it is my message for you.
+    You could notice that I used the generic type in classes,
+    but actually it is not the point. In all classes, like graphs or search algorithms,
+    I used my own Vertex<V> class to represent each vertex in the graph.
+    I will live some commends in these places. So it would easier to you to find it.
+ */
+
+
 public class Main {
+
     public static void main(String[] args) {
         WeightedGraph<String> weightedGraph = new WeightedGraph<>(true);
         fillWithWeights(weightedGraph);
@@ -55,6 +66,7 @@ public class Main {
         for (String v : search.pathTo(key)) {
             System.out.print(v + " -> ");
         }
+
         System.out.println();
     }
 }

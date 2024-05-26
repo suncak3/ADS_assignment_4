@@ -4,16 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1414b22-7270-4ebc-aae4-027305d16352" name="Changes" comment="I have created edge and vertex classes with its methods, getters and setters, which are parts of the whole graph">
-      <change afterPath="$PROJECT_DIR$/src/Graphs/MyGraph.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Graphs/WeightedGraph.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SearchAlgorithms/BFS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SearchAlgorithms/DFS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SearchAlgorithms/DijkstraSearch.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SearchAlgorithms/Search.java" afterDir="false" />
+    <list default="true" id="a1414b22-7270-4ebc-aae4-027305d16352" name="Changes" comment="Final commit.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ElementsOfGraph/Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ElementsOfGraph/Edge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ElementsOfGraph/Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ElementsOfGraph/Vertex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Graphs/MyGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphs/MyGraph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Graphs/WeightedGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphs/WeightedGraph.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SearchAlgorithms/BFS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SearchAlgorithms/BFS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SearchAlgorithms/DFS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SearchAlgorithms/DFS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SearchAlgorithms/DijkstraSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SearchAlgorithms/DijkstraSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SearchAlgorithms/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SearchAlgorithms/Search.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +92,8 @@
       <workItem from="1716548862180" duration="1687000" />
       <workItem from="1716607734147" duration="1668000" />
       <workItem from="1716615979062" duration="953000" />
-      <workItem from="1716642044617" duration="3780000" />
+      <workItem from="1716642044617" duration="16953000" />
+      <workItem from="1716710199346" duration="3279000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -109,7 +111,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716231440333</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Final commit.">
+      <option name="closed" value="true" />
+      <created>1716648397270</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1716648397270</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -118,6 +128,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
     <MESSAGE value="I have created edge and vertex classes with its methods, getters and setters, which are parts of the whole graph" />
-    <option name="LAST_COMMIT_MESSAGE" value="I have created edge and vertex classes with its methods, getters and setters, which are parts of the whole graph" />
+    <MESSAGE value="Final commit." />
+    <option name="LAST_COMMIT_MESSAGE" value="Final commit." />
   </component>
 </project>

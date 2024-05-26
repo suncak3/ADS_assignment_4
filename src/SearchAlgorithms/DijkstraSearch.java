@@ -1,80 +1,63 @@
 package SearchAlgorithms;
 
 import ElementsOfGraph.Edge;
+import ElementsOfGraph.Vertex;
 import Graphs.WeightedGraph;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
-public class DijkstraSearch<Vertex> extends Search<Vertex> {
-    private final WeightedGraph<Vertex> graph;
-    private final Map<Vertex, Double> distanceTo;
-    private final Set<Vertex> unsettledNotes;
+public class DijkstraSearch<V> extends Search<V> {
+    private WeightedGraph<V> graph;
+    private Map<Vertex<V>, Double> distTo = new HashMap<>();
+    private Map<Vertex<V>, Boolean> visited = new HashMap<>();
 
-    public DijkstraSearch(WeightedGraph<Vertex> graph, Vertex source){
+    public DijkstraSearch(WeightedGraph<V> graph, V source) {
         super(source);
-        unsettledNotes = new HashSet<>();
         this.graph = graph;
-        distanceTo = new HashMap<>();
+        //Also here
+        Vertex<V> sourceVertex = new Vertex<>(source);
 
-        dijkstraSearch();
+        for (Vertex<V> vertex : graph.getVertices()) {
+            distTo.put(vertex, Double.MAX_VALUE);
+            visited.put(vertex, false);
+        }
+        distTo.put(sourceVertex, 0.0);
+
+        dijkstra();
     }
 
-    private void dijkstraSearch() {
-        distanceTo.put(source, (double) 0);
-        unsettledNotes.add(source);
+    private void dijkstra() {
+        while (true) {
+            Vertex<V> v = getMinDistanceVertex();
+            if (v == null) break;
+            visited.put(v, true);
 
-        while(!unsettledNotes.isEmpty()){
-            Vertex current = getVertexWithMinWeight(unsettledNotes);
-            unsettledNotes.remove(current);
-            marked.add(current);
-
-            for(Vertex neighbor : graph.adj(current)){
-                double edgeWeight = getEdgeWeight(current, neighbor);
-                double newDistance = distanceTo.get(current) + edgeWeight;
-
-                if(newDistance < getShortestDistance(neighbor)){
-                    distanceTo.put(neighbor, newDistance);
-                    edgeTo.put(neighbor, current);
-                    unsettledNotes.add(neighbor);
-                }
+            for (Edge<Vertex<V>> edge : graph.getEdges(v.getData())) {
+                updateShortestPath(edge);
             }
         }
     }
 
-    private double getEdgeWeight(Vertex current, Vertex neighbor) {
-        for(Edge<Vertex> edge : graph.getEdges(current)) {
-            if (edge.getDest().equals(neighbor))
-                return edge.getWeight();
-        }
-        return Double.MAX_VALUE;
-    }
-
-    private Vertex getVertexWithMinWeight(Set<Vertex> unsettledNotes) {
-        Vertex minVertex = null;
-        for(Vertex v : unsettledNotes){
-            if(minVertex == null){
-                minVertex = v;
-                continue;
-            }
-
-            if(getShortestDistance(v) < getShortestDistance(minVertex)){
-                minVertex = v;
+    private Vertex<V> getMinDistanceVertex() {
+        Vertex<V> minVertex = null;
+        double minDistance = Double.MAX_VALUE;
+        for (Map.Entry<Vertex<V>, Double> entry : distTo.entrySet()) {
+            if (!visited.get(entry.getKey()) && entry.getValue() < minDistance) {
+                minDistance = entry.getValue();
+                minVertex = entry.getKey();
             }
         }
         return minVertex;
     }
 
-    private double getShortestDistance(Vertex v) {
-        Double d = distanceTo.get(v);
-
-        if(d == null)
-            return Double.MAX_VALUE;
-        else
-            return d;
+    private void updateShortestPath(Edge<Vertex<V>> e) {
+        Vertex<V> v = e.getSource(), w = e.getDest();
+        double weight = e.getWeight();
+        double distanceThroughV = distTo.get(v) + weight;
+        if (distanceThroughV < distTo.get(w)) {
+            distTo.put(w, distanceThroughV);
+            edgeTo.put(w, v);
+        }
     }
-
-
 }

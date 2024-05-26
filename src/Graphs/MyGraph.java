@@ -1,42 +1,51 @@
 package Graphs;
 
+import ElementsOfGraph.Vertex;
 import java.util.*;
 
-
-public class MyGraph<Vertex> {
+public class MyGraph<V> {
     private final boolean undirected;
-    private final Map<Vertex, List<Vertex>> map = new HashMap<>();
-
-    public MyGraph() {
-        this(true);
-    }
+    private Map<Vertex<V>, List<Vertex<V>>> map = new HashMap<>();
 
     public MyGraph(boolean undirected) {
         this.undirected = undirected;
     }
 
-    public void addVertex(Vertex v) {
-        if (hasVertex(v))
-            return;
-
-        map.put(v, new LinkedList<>());
+    public void addVertex(V data) {
+        Vertex<V> newVertex = new Vertex<>(data);
+        if (!map.containsKey(newVertex)) {
+            map.put(newVertex, new ArrayList<>());
+        }
     }
 
-    public void addEdge(Vertex source, Vertex dest) {
-        if (!hasVertex(source))
-            addVertex(source);
 
-        if (!hasVertex(dest))
-            addVertex(dest);
+    public void addEdge(V source, V destination) {
+        //For example here
+        Vertex<V> src = new Vertex<>(source);
+        Vertex<V> dest = new Vertex<>(destination);
 
-        if (hasEdge(source, dest)
-                || source.equals(dest))
-            return; // reject parallels & self-loops
+        if (!map.containsKey(src)) {
+            map.put(src, new ArrayList<>());
+        }
+        map.get(src).add(dest);
 
-        map.get(source).add(dest);
+        if (undirected) {
+            if (!map.containsKey(dest)) {
+                map.put(dest, new ArrayList<>());
+            }
+            map.get(dest).add(src);
+        }
+    }
 
-        if (undirected)
-            map.get(dest).add(source);
+    public boolean hasVertex(Vertex<V> vertex) {
+        return map.containsKey(vertex);
+    }
+
+    public boolean hasEdge(V source, V destination) {
+        //Here
+        Vertex<V> src = new Vertex<>(source);
+        Vertex<V> dest = new Vertex<>(destination);
+        return map.containsKey(src) && map.get(src).contains(dest);
     }
 
     public int getVerticesCount() {
@@ -45,29 +54,20 @@ public class MyGraph<Vertex> {
 
     public int getEdgesCount() {
         int count = 0;
-        for (Vertex v : map.keySet()) {
-            count += map.get(v).size();
+        for (Vertex<V> vertex : map.keySet()) {
+            count += map.get(vertex).size();
         }
-
-        if (undirected)
-            count /= 2;
-
-        return count;
+        return undirected ? count / 2 : count;
     }
 
 
-    public boolean hasVertex(Vertex v) {
-        return map.containsKey(v);
+    public List<Vertex<V>> adj(Vertex<V> vertex) {
+        if(map.containsKey(vertex)){
+            return map.get(vertex);
+        }
+        else{
+            return new ArrayList<>();
+        }
     }
 
-    public boolean hasEdge(Vertex source, Vertex dest) {
-        if (!hasVertex(source)) return false;
-        return map.get(source).contains(dest);
-    }
-
-    public List<Vertex> adj(Vertex v) {
-        if (!hasVertex(v)) return null;
-
-        return map.get(v);
-    }
 }

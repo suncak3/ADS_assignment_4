@@ -1,31 +1,31 @@
 package SearchAlgorithms;
 
 import Graphs.MyGraph;
-import Graphs.WeightedGraph;
+import ElementsOfGraph.Vertex;
+import java.util.*;
 
-import java.util.LinkedList;
-import java.util.Queue;
+public class BFS<V> extends Search<V> {
+    private MyGraph<V> graph;
 
-public class BFS<Vertex> extends Search<Vertex> {
-    private final MyGraph<Vertex> graph;
-    public BFS(MyGraph<Vertex> graph, Vertex source){
+    public BFS(MyGraph<V> graph, V source) {
         super(source);
         this.graph = graph;
-        bfs(source);
+        Vertex<V> sourceVertex = new Vertex<>(source);
+        bfs(sourceVertex);
     }
 
-    public void bfs(Vertex v){
-        Queue<Vertex> queue = new LinkedList<>();
-        marked.add(v);
-        queue.add(v);
+    private void bfs(Vertex<V> source) {
+        Queue<Vertex<V>> queue = new LinkedList<>();
+        queue.add(source);
+        marked.add(source);
 
-        while(!queue.isEmpty()){
-            Vertex h = queue.remove();
-            for(Vertex vertex : graph.adj(h)){
-                if(!marked.contains(vertex)){
-                    edgeTo.put(vertex, h);
-                    marked.add(vertex);
-                    queue.add(vertex);
+        while (!queue.isEmpty()) {
+            Vertex<V> current = queue.remove();
+            for (Vertex<V> neighbor : graph.adj(current)) {
+                if (!marked.contains(neighbor)) {
+                    marked.add(neighbor);
+                    edgeTo.put(neighbor, current);
+                    queue.add(neighbor);
                 }
             }
         }

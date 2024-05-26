@@ -1,83 +1,82 @@
 package Graphs;
 
+import ElementsOfGraph.Vertex;
 import ElementsOfGraph.Edge;
-
 import java.util.*;
 
-public class WeightedGraph<Vertex> {
-    private final boolean undirected;
-    private Map<Vertex, List<Edge<Vertex>>> map = new HashMap<>();
-
-    public WeightedGraph(){
-        this.undirected = true;
-    }
+public class WeightedGraph<V> {
+    private Map<Vertex<V>, List<Edge<Vertex<V>>>> map = new HashMap<>();
+    private boolean undirected;
 
     public WeightedGraph(boolean undirected) {
         this.undirected = undirected;
     }
 
-    public void addVertex(Vertex v){
-        map.put(v, new ArrayList<>());
+    public void addVertex(V data) {
+        map.putIfAbsent(new Vertex<>(data), new ArrayList<>());
     }
 
-    public void addEdge(Vertex source, Vertex dest, double weight){
-        if(!hasVertex(source))
-            addVertex(source);
-        if(!hasVertex(dest))
-            addVertex(dest);
-
-        if(!hasEdge(source, dest) && !source.equals(dest)){
-            map.get(source).add(new Edge<>(source, dest, weight));
-
-            if(undirected){
-                map.get(dest).add(new Edge<>(dest, source, weight));
+    public void addEdge(V source, V destination, double weight) {
+        Vertex<V> src = getOrCreateVertex(source);
+        Vertex<V> dest = getOrCreateVertex(destination);
+        if (!src.equals(dest)) {
+            map.get(src).add(new Edge<>(src, dest, weight));
+            if (undirected) {
+                map.get(dest).add(new Edge<>(dest, src, weight));
             }
         }
     }
 
-    public int getVerticesCount(){
-        return map.size();
-    }
-
-    public int getEdgesCount(){
-        int count = 0;
-
-        for(Vertex v : map.keySet()){
-            count += map.get(v).size();
+    private Vertex<V> getOrCreateVertex(V data) {
+        Vertex<V> vertex = new Vertex<>(data);
+        if (!map.containsKey(vertex)) {
+            map.put(vertex, new ArrayList<>());
         }
-
-        return undirected ? count / 2 : count;
+        return vertex;
     }
 
-    public boolean hasVertex(Vertex v){
-        return map.containsKey(v);
+    public boolean hasVertex(V data) {
+        return map.containsKey(new Vertex<>(data));
     }
 
-    public boolean hasEdge(Vertex source, Vertex dest){
-        if(!hasVertex(source)){
-            return false;
-        }
-        for(Edge<Vertex> edge : map.get(source)){
-            if(edge.getDest().equals(dest)){
-                return true;
+    public boolean hasEdge(V source, V destination) {
+        Vertex<V> src = new Vertex<>(source);
+        Vertex<V> dest = new Vertex<>(destination);
+        if (map.containsKey(src)) {
+            for (Edge<Vertex<V>> edge : map.get(src)) {
+                if (edge.getDest().equals(dest)) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    public Iterable<Vertex> adj(Vertex v){
-        if(!hasVertex(v))
-            return null;
-        List<Vertex> adjVertices = new ArrayList<>();
-        for(Edge<Vertex> edge : map.get(v)){
-            adjVertices.add(edge.getDest());
-        }
-        return adjVertices;
+
+    public int getVerticesCount() {
+        return map.size();
     }
 
-    public Iterable<Edge<Vertex>> getEdges(Vertex v){
-        if(!hasVertex(v))
-            return null;
-        return map.get(v);
+
+    public int getEdgesCount() {
+        int count = 0;
+        for (Vertex<V> vertex : map.keySet()) {
+            count += map.get(vertex).size();
+        }
+        return undirected ? count / 2 : count;
+    }
+
+
+    public List<Edge<Vertex<V>>> getEdges(V data) {
+        Vertex<V> vertex = new Vertex<>(data);
+        if (map.containsKey(vertex)) {
+            return map.get(vertex);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public Set<Vertex<V>> getVertices() {
+        return new HashSet<>(map.keySet());
     }
 }
